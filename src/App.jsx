@@ -52,11 +52,6 @@ function App() {
                 cover: pic5,
                 audio: song5
             },
-            {
-                title: "All eyes on me",
-                artist: "Bo Burnhum",
-                video: video1
-            },
         ], []
     )
     

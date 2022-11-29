@@ -22,9 +22,9 @@ const AudioPlayer = ({songs}) => {
     const {title, artist, cover, audio, video } = songs[songIndex];
 
 
-    const audioRef = useRef(new Audio(audio ? audio : video)); //Crear el elemento de audio por medio del constructor
-    const intervalRef = useRef(); // Referencia al timer de la cancion
-    const isReady = useRef(false); // Booleano que determina ciertas acciones para ejecutar
+    const audioRef = useRef(new Audio(audio ? audio : video)); 
+    const intervalRef = useRef(); 
+    const isReady = useRef(false); 
     const {duration} = audioRef.current;
 
     const [volumen, setVolumen] = useState(audioRef.current.volume)
@@ -33,14 +33,12 @@ const AudioPlayer = ({songs}) => {
     const lightIconColor = theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
 
     const onScrub = (value) => {
-        // Clear any timers already running
         clearInterval(intervalRef.current);
         audioRef.current.currentTime = value;
         setSongProgress(audioRef.current.currentTime);
     }
 
     const onScrubEnd = () => {
-        // If not already playing, start
         if (!isPlaying) {
             setIsPlaying(true);
         }
@@ -95,13 +93,11 @@ const AudioPlayer = ({songs}) => {
             setIsPlaying(true);
             startTimer();
         } else {
-            //Set value isReady ref para la siguiente cancion
             isReady.current = true;
         }
 
     }, [songIndex, audio ? audio : video ]);
 
-    //Pausar y limpiar en el desmontaje
     useEffect(() => {
         return () => {
             audioRef.current.pause();
