@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import video1 from "../video/video1.mp4";
 import styled from 'styled-components';
 import Wallpaper from "./styled/Wallpaper";
+import PauseRounded from '@mui/icons-material/PauseRounded';
+import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded';
+import FastForwardRounded from '@mui/icons-material/FastForwardRounded';
+import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
+import IconButton from "@mui/material/IconButton";
+import {VolumeDownRounded, VolumeUpRounded} from "@mui/icons-material";
+
 const Content = styled.div`
 .player {
   border-radius: 30px;
@@ -31,22 +38,16 @@ const Content = styled.div`
 .player__button {
   background: none;
   border: 0;
-  line-height: 1;
+  line-height: 0.2;
   color: white;
   text-align: center;
   outline: 0;
-  padding: 0;
   cursor: pointer;
   max-width: 50px;
 }
 
 .player__button:focus {
   border-color: #ffc600;
-}
-
-.player__slider {
-  width: 10px;
-  height: 30px;
 }
 
 .player__controls {
@@ -57,7 +58,7 @@ const Content = styled.div`
   transform: translateY(100%) translateY(-5px);
   transition: all .3s;
   flex-wrap: wrap;
-  background: rgba(0,0,0,0.1);
+  background: rgba(31,70,144,1);
 }
 
 .player:hover .player__controls {
@@ -65,7 +66,7 @@ const Content = styled.div`
 }
 
 .player:hover .progress {
-  height: 15px;
+  height: 8px;
 }
 
 .player__controls > * {
@@ -76,15 +77,14 @@ const Content = styled.div`
   flex: 10;
   position: relative;
   display: flex;
-  padding: 0 20px;
   flex-basis: 100%;
-  height: 5px;
+  height: 1px;
   transition:height 0.3s;
   cursor: pointer;
 }
 
 .progress__filled {
-  padding: 0 20px;
+  padding: 0 5px;
   background: white;
   border-radius: 20px;
   flex: 0;
@@ -94,19 +94,16 @@ const Content = styled.div`
 input[type=range] {
   -webkit-appearance: none;
   background: transparent;
-  width: 100%;
-  margin: 0 5px;
 }
 input[type=range]:focus {
   outline: none;
 }
 input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8.4px;
+  height: 5px;
   cursor: pointer;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
   background: white;
-  border-radius: 1.3px;
+  border-radius: 20px;
   border: 0.2px solid rgba(1, 1, 1, 0);
 }
 input[type=range]::-webkit-slider-thumb {
@@ -117,28 +114,8 @@ input[type=range]::-webkit-slider-thumb {
   background: white;
   cursor: pointer;
   -webkit-appearance: none;
-  margin-top: -3.5px;
+  margin-top: -5px;
   box-shadow: 0 0 2px rgba(0,0,0,0.2);
-}
-input[type=range]:focus::-wefbkit-slider-runnable-track {
-  background: white;
-}
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
-  background: white;
-  border-radius: 1.3px;
-  border: 0.2px solid rgba(1, 1, 1, 0);
-}
-input[type=range]::-moz-range-thumb {
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(13, 13, 13, 0);
-  height: 15px;
-  width: 15px;
-  border-radius: 50px;
-  background: white;
-  cursor: pointer;
 }
 `
 
@@ -226,13 +203,13 @@ class VideoPlayer extends Component {
   }
   
   render() {
-    const { video, progress, playbackRate, volume } = this.state;
+    const { video, progress, volume } = this.state;
     
     return (
       <Content>
         <Wallpaper/>
       <div className="player">
-      
+      .
         <video
           className="player__video viewer"
           ref="video"
@@ -260,14 +237,24 @@ class VideoPlayer extends Component {
             data-skip="-10" 
             className="player__button"
             onClick={this.skip}
-          >« 
+          >
+            <FastRewindRounded fontSize='2px' color='white' />
           </button>
 
           <button 
             className="player__button toggle" 
             title="Toggle Play"
             onClick={this.togglePlay}>
-            { video && video.paused ? '►' : '❚ ❚' }
+            { video && video.paused ? (
+              <IconButton>
+                  <PauseRounded sx={{ fontSize: '2rem' , color:'white'}}  />
+              </IconButton>
+          ) : (
+              <IconButton>
+                  <PlayArrowRounded sx={{ fontSize: '2rem', color: 'white' }} />
+              </IconButton>
+          )
+            }
           </button>
           
           
@@ -275,23 +262,16 @@ class VideoPlayer extends Component {
             data-skip="25" 
             className="player__button"
             onClick={this.skip}
-          > »
-          </button>
-          <input 
+          > 
+            <FastForwardRounded fontSize='2px' color='white' />
+          </button> 
+            <input 
             type="range" 
             name="volume" 
             className="player__slider" 
             min="0" max="1" step="0.05" value={volume}
             onChange={this.handleRangeUpdate}
           />
-          <input 
-            type="range" 
-            name="playbackRate" 
-            className="player__slider" 
-            min="0.5" max="2" step="0.1" value={playbackRate}
-            onChange={this.handleRangeUpdate}
-          />
-    
         </div>
 
       </div>

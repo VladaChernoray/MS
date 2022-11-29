@@ -9,6 +9,7 @@ import TinyText from "./styled/TinyText";
 import Wallpaper from "./styled/Wallpaper";
 import {useTheme} from "@mui/material";
 import VolumenSlider from "./VolumenSlider";
+import CoverVideo from "./styled/CoverVideo";
 
 const AudioPlayer = ({songs}) => {
     const theme = useTheme();
@@ -16,12 +17,14 @@ const AudioPlayer = ({songs}) => {
     const [songProgress, setSongProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    const {title, artist, cover, audio } = songs[songIndex];
+    const videoRef = useRef(null);
 
-    const audioRef = useRef(new Audio(audio)); //Crear el elemento de audio por medio del constructor
+    const {title, artist, cover, audio, video } = songs[songIndex];
+
+
+    const audioRef = useRef(new Audio(audio ? audio : video)); //Crear el elemento de audio por medio del constructor
     const intervalRef = useRef(); // Referencia al timer de la cancion
     const isReady = useRef(false); // Booleano que determina ciertas acciones para ejecutar
-
     const {duration} = audioRef.current;
 
     const [volumen, setVolumen] = useState(audioRef.current.volume)
@@ -84,7 +87,7 @@ const AudioPlayer = ({songs}) => {
     useEffect(() => {
         audioRef.current.pause();
 
-        audioRef.current = new Audio(audio);
+        audioRef.current = new Audio(audio ? audio : video);
         setSongProgress(audioRef.current.currentTime);
 
         if (isReady.current) {
@@ -96,7 +99,7 @@ const AudioPlayer = ({songs}) => {
             isReady.current = true;
         }
 
-    }, [songIndex, audio ]);
+    }, [songIndex, audio ? audio : video ]);
 
     //Pausar y limpiar en el desmontaje
     useEffect(() => {
@@ -118,15 +121,19 @@ const AudioPlayer = ({songs}) => {
         <Box sx={{ overflow: 'hidden'}}>
             <Widget>
                 <Box>
+                    {audio ? (
                     <CoverImage>
                         <img
                             alt={title}
                             src={cover}
                         />
-                        <video width="320" height="240" controls>
-                            <source src={cover} type="video/mp4"></source>
-                            </video>
-                    </CoverImage>
+                    </CoverImage>) : (
+                    <CoverVideo>
+                        <video width="400" height="300" controls>
+                            <source src={video} type="video/mp4"/>
+                        </video>
+                    </CoverVideo>
+                    )}    
                     <Box 
                     align="center"
                     paddingTop="10px"
