@@ -17,7 +17,7 @@ import pic5 from './images/pic5.jpg'
 import video1 from './video/video1.mp4'
 
 import AudioPlayer from "./components/AudioPlayer";
-import VideoPlayer from './components/VideoPlayer';
+import VideoPlayer from "./components/VideoPlayer";
 
 function App() {
     let songs = useMemo(
@@ -77,7 +77,7 @@ function App() {
         <BrowserRouter>
         <Routes>
           <Route path="/audioPlayer" element={<AudioPlayer  songs={songs} />}></Route>
-          <Route path="/videoPlayer" element={<VideoPlayer video={video} />}></Route>
+          <Route path="/videoPlayer" element={<VideoPlayer/>}></Route>
         </Routes>
         </BrowserRouter>
       </React.StrictMode>
