@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import video1 from "../video/video1.mp4";
+import video2 from "../video/video2.mp4";
+import video3 from "../video/video3.mp4";
+import video4 from "../video/video4.mp4";
+
 import styled from 'styled-components';
 import Wallpaper from "./styled/Wallpaper";
 import PauseRounded from '@mui/icons-material/PauseRounded';
@@ -7,7 +11,6 @@ import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded';
 import FastForwardRounded from '@mui/icons-material/FastForwardRounded';
 import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
 import IconButton from "@mui/material/IconButton";
-import {VolumeDownRounded, VolumeUpRounded} from "@mui/icons-material";
 
 const Content = styled.div`
 .player {
@@ -171,8 +174,6 @@ class VideoPlayer extends Component {
     this.setState({
       [name]: value,
     });
-    // Todo: Check how to update state with Immutable JS
-    // instead of using refs
     this.refs.video[name] = value;
   }
   
@@ -259,7 +260,7 @@ class VideoPlayer extends Component {
           
           
           <button 
-            data-skip="25" 
+            data-skip="10" 
             className="player__button"
             onClick={this.skip}
           > 

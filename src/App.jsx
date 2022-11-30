@@ -52,6 +52,11 @@ function App() {
                 cover: pic5,
                 audio: song5
             },
+            {
+                title: "i was all over her",
+                artist: "salvia palth",
+                video: video1
+            },
         ], []
     )
     
